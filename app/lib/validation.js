@@ -48,3 +48,12 @@ export function validateAppliance(data) {
     return { valid: false, message: 'Invalid cost. Please, enter in format : 000.00' };
   return { valid: true };
 }
+
+//cleaning input by removing quotes and backslashes
+export function sanitise(value) {
+  if (typeof value !== 'string') return value;
+  return value
+    .trim()
+    .replace(/<[^>]*>/g, '')      
+    .replace(/['"\\]/g, '');      
+}
