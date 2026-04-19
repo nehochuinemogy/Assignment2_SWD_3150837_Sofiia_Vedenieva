@@ -10,4 +10,19 @@ export default function Navbar() {
         { label: 'Update', href: '/update'},
         { label: 'Delete', href: '/delete'},
     ];
+
+    return (
+    <nav className="navbar">
+      <Link href="/" className="navbar-brand">
+        Appliance Inventory
+      </Link>
+      <ul className="navbar-links">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link href={link.href}>{link.label}</Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
 }
