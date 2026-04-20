@@ -74,5 +74,43 @@ const userCheck = validateUser(clean);
         userID = userResult.insertId;
       }
 
+      //inserting appliance
+      await conn.execute(
+        `INSERT INTO Appliances 
+         (UserID, ApplianceType, Brand, ModelNumber, SerialNumber, PurchaseDate, WarrantyExpirationDate, Cost)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          userID,
+          clean.applianceType,
+          clean.brand,
+          clean.modelNumber,
+          clean.serialNumber,
+          clean.purchaseDate,
+          clean.warrantyExpirationDate,
+          parseFloat(clean.cost),
+        ]
+      );
+
+      //releasing the database connection back to the pool
+      conn.release();
+
+      //displaying message
+      return NextResponse.json(
+        { message: 'New appliance added successfully' },
+        { status: 201 }
+      );
+
+      // making sue connection is released
+    } catch (dbErr) {
+      conn.release();
+      throw dbErr;
+    }
+      //
+    } catch (error) {
+    console.error('error', error);
+    return NextResponse.json(
+      { message: 'error. please try again.' },
+      { status: 500 }
+    );
+  }
 }
-};
