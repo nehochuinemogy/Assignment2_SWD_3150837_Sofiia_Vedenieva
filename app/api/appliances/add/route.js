@@ -51,6 +51,28 @@ const userCheck = validateUser(clean);
         conn.release();
         return NextResponse.json({ message: 'You entered extsting appliance' }, { status: 409 });
       }
+ 
+      //chhecking if user email is existing one
+       const [users] = await conn.execute(
+        'SELECT UserID FROM Users WHERE Email = ?',
+        [clean.email]
+      );
+      //implementing user id 
+      let userID;
+
+
+      if (users.length > 0) {
+        // using existing user
+        userID = users[0].UserID;
+      } else {
+        // if not exist, pasting new user
+        const [userResult] = await conn.execute(
+          `INSERT INTO Users (FirstName, LastName, Address, Mobile, Email, Eircode)
+           VALUES (?, ?, ?, ?, ?, ?)`,
+          [clean.firstName, clean.lastName, clean.address, clean.mobile, clean.email, clean.eircode]
+        );
+        userID = userResult.insertId;
+      }
 
 }
 };
