@@ -1,36 +1,29 @@
-'use client';
+import { NextResponse } from 'next/server';
+import pool from '../../../../lib/db';
+import { validateUser, validateAppliance, sanitise } from '../../../../lib/validation';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import {nameRegex, addressRegex, mobileRegex, emailRegex, eircodeRegex,
-  applianceTypeRegex, brandRegex, modelNumberRegex, serialNumberRegex, costRegex
-} from '../../lib/validation';
+export async function POST(request) {
+  try {
+    //Parsing JSON body from form
+    const body = await request.json();
 
-const APPLIANCE_TYPES = [
-  'Washing Machine', 'Dishwasher', 'Refrigerator', 'Freezer',
-  'Oven', 'Microwave', 'Tumble Dryer', 'Vacuum Cleaner',
-  'Air Conditioner', 'Water Heater', 'Other'
-];
+    //Sanitizing all fields
+    const clean = {
+      firstName: sanitise(body.firstName),
+      lastName: sanitise(body.lastName),
+      address: sanitise(body.address),
+      mobile: sanitise(body.mobile),
+      email: sanitise(body.email),
+      eircode: sanitise(body.eircode),
+      applianceType: sanitise(body.applianceType),
+      brand: sanitise(body.brand),
+      modelNumber: sanitise(body.modelNumber),
+      serialNumber: sanitise(body.serialNumber),
+      purchaseDate: sanitise(body.purchaseDate),
+      warrantyExpirationDate: sanitise(body.warrantyExpirationDate),
+      cost: body.cost,
+    };
 
-export default function AddPage() {
-  const [form, setForm] = useState({
-    firstName: '', lastName: '', address: '', mobile: '', email: '', eircode: '',
-    applianceType: '', brand: '', modelNumber: '', serialNumber: '',
-    purchaseDate: '', warrantyExpirationDate: '', cost: '',
-  });
-
-  const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-    setErrors(prev => ({ ...prev, [name]: '' }));
-  };
-  const validate = () => {
-    //creating object to store errors 
-  const e = {};
+    
 }
-
 };
