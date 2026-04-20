@@ -1,10 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import {nameRegex, addressRegex, mobileRegex, emailRegex, eircodeRegex,
-  applianceTypeRegex, brandRegex, modelNumberRegex, serialNumberRegex, costRegex
-} from '../../lib/validation';
 
 const APPLIANCE_TYPES = [
   'Washing Machine', 'Dishwasher', 'Refrigerator', 'Freezer',
@@ -32,5 +28,36 @@ export default function AddPage() {
     //creating object to store errors 
   const e = {};
 }
+ if (!nameRegex.test(form.firstName)) 
+    e.firstName = 'Please, enter letters only, from 2-50 characters';
+    if (!nameRegex.test(form.lastName)) 
+        e.lastName = 'Please, enter letters only, from 2-50 characters';
+    if (!addressRegex.test(form.address))
+         e.address = 'Please, enter valid address from 5-150 chars';
+    if (!mobileRegex.test(form.mobile))
+         e.mobile = 'Please, enter valid mobile number 0800000000).';
+    if (!emailRegex.test(form.email))
+         e.email = 'Please, enter valid email address';
+    if (!eircodeRegex.test(form.eircode)) 
+        e.eircode = 'Please, enter valid eircode format D00 AB00';
+    if (!applianceTypeRegex.test(form.applianceType))
+         e.applianceType = 'Please select a type.';
+    if (!brandRegex.test(form.brand))
+         e.brand = 'Please, enter brand from 1-50 chars';
+    if (!modelNumberRegex.test(form.modelNumber)) 
+        e.modelNumber = 'Please, enter model number';
+    if (!serialNumberRegex.test(form.serialNumber))
+         e.serialNumber = 'Please, enter serial number required from 3-50 char';
+    if (!form.purchaseDate)
+         e.purchaseDate = 'Please, enter purchase date';
+    if (!form.warrantyExpirationDate)
+         e.warrantyExpirationDate = 'Please, enter warranty date ';
+    if (form.purchaseDate && form.warrantyExpirationDate &&
+        new Date(form.warrantyExpirationDate) <= new Date(form.purchaseDate))
+      e.warrantyExpirationDate = 'Warranty date must be after purchase date.';
+    if (!costRegex.test(form.cost)) e.cost = 'Please, enter valid cost 000.00';
 
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
 };
