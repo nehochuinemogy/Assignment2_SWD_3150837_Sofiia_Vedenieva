@@ -297,7 +297,9 @@ export default function AddPage() {
       <Link href="/" className="home-link"> Back to home</Link>
 
     </div>
-  );
+    )
 }
+  
+
   
 
