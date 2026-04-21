@@ -1,14 +1,23 @@
 'use client';
-
+//hook
 import { useState } from 'react';
+//link for navigation
 import Link from 'next/link';
-
+//appliance array for options
 const APPLIANCE_TYPES = [
-  'Washing Machine', 'Dishwasher', 'Refrigerator', 'Freezer',
-  'Oven', 'Microwave', 'Tumble Dryer', 'Vacuum Cleaner',
-  'Air Conditioner', 'Water Heater', 'Other'
+  'Washing Machine',
+  'Dishwasher', 
+  'Refrigerator', 
+  'Freezer',
+  'Oven', 
+  'Microwave', 
+  'Tumble Dryer', 
+  'Vacuum Cleaner',
+  'Air Conditioner', 
+  'Water Heater', 
+  'Other'
 ];
-
+//form state
 export default function AddPage() {
   const [form, setForm] = useState({
      firstName: '',
@@ -25,11 +34,14 @@ export default function AddPage() {
      warrantyExpirationDate: '', 
      cost: '',
   });
-
+  //storing validation errors
   const [errors, setErrors] = useState({});
+  //storing status 
   const [status, setStatus] = useState(null);
+  //state for submit button
   const [loading, setLoading] = useState(false);
 
+  //updating form values and clearing errors
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
@@ -37,12 +49,13 @@ export default function AddPage() {
   };
   const validate = () => {
        if (!validate()) return; 
-
      setLoading(true);
      setStatus(null);
-    //creating object to store errors 
-  const e = {};
 
+    //creating object to store errors 
+   const e = {};
+
+   //user input validation
  if (!nameRegex.test(form.firstName)) 
     e.firstName = 'Please, enter letters only, from 2-50 characters';
     if (!nameRegex.test(form.lastName)) 
@@ -55,6 +68,7 @@ export default function AddPage() {
          e.email = 'Please, enter valid email address';
     if (!eircodeRegex.test(form.eircode)) 
         e.eircode = 'Please, enter valid eircode format D00 AB00';
+   //appliance form validation
     if (!applianceTypeRegex.test(form.applianceType))
          e.applianceType = 'Please select a type.';
     if (!brandRegex.test(form.brand))
@@ -67,12 +81,15 @@ export default function AddPage() {
          e.purchaseDate = 'Please, enter purchase date';
     if (!form.warrantyExpirationDate)
          e.warrantyExpirationDate = 'Please, enter warranty date ';
+    //enshuring that warrantly date is not entered before purchase dateaa
     if (form.purchaseDate && form.warrantyExpirationDate &&
         new Date(form.warrantyExpirationDate) <= new Date(form.purchaseDate))
       e.warrantyExpirationDate = 'Warranty date must be after purchase date.';
     if (!costRegex.test(form.cost)) e.cost = 'Please, enter valid cost 000.00';
 
+    //updating error state
     setErrors(e);
+    //if no errors eturnig true
     return Object.keys(e).length === 0;
     };
 
@@ -112,10 +129,18 @@ export default function AddPage() {
     }
 };
     return (
-    <div className="card">
+    <div className="card"> 
       <h1 className="card-add-name">Add appliance</h1>
       <p className="card-add-desc">Please, enter information below</p>
-
+     {/*
+          * status- if not null=display
+          * <div className={`alert alert-${status.type}`}- displaying a message with error-red, succes-green>
+          * {status.message}- dispplaying message text(success or error)
+          * {status.type === 'success' && (
+            <> &nbsp;<Link href="/" className="back-link">Return to home</Link></>
+          )} - if operation is succesful, return home lik appeared
+          * <form onSubmit={handleSubmit}> - from started 
+        */}
       {status && (
         <div className={`alert alert-${status.type}`}>
           {status.message}
@@ -125,7 +150,7 @@ export default function AddPage() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={handleSubmit}>
 
         {/* user info*/}
         <div className="app-heading">User</div>
