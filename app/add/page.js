@@ -59,5 +59,40 @@ export default function AddPage() {
 
     setErrors(e);
     return Object.keys(e).length === 0;
+
+    //implementing nadling for form sunmission
+     const handleSubmit = async (e) => {
+      e.preventDefault();
+
+     setLoading(true);
+     setStatus(null);
+
+     try {
+      // sending POST request to our API
+      const res = await fetch('/api/appliances/add', {
+        method: 'POST',
+        headers: { 'content': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        // success message and reseting form
+        setStatus({ type: 'success', message: data.message });
+
+      setForm({
+          firstName: '', lastName: '', address: '', mobile: '', email: '', eircode: '',
+          applianceType: '', brand: '', modelNumber: '', serialNumber: '',
+          purchaseDate: '', warrantyExpirationDate: '', cost: '',
+        });
+         } else {
+        //if else, returning error
+        setStatus({ type: 'error', message: data.message || 'Failed to add appliance.' });
+      }
+       } catch {
+      //implementing catch for errors
+      setStatus({ type: 'error', message: 'error, lease try again.' });
+    }
   };
 };
