@@ -100,7 +100,7 @@ export default function AddPage() {
       e.preventDefault();
 
       if (!validate()) return;
-      
+
      setLoading(true);
      setStatus(null);
 
@@ -173,7 +173,7 @@ export default function AddPage() {
             {errors.firstName && <span className="field-error">{errors.firstName}</span>}
           </div>
            <div className="form-group">
-            <label htmlFor="lastName">Last name</label>
+            <label htmlFor="lastName">Last name</label>      
             <input
               id="lastName" name="lastName" type="text"
               className={`form-control ${errors.lastName ? 'error' : ''}`} 
@@ -230,7 +230,7 @@ export default function AddPage() {
            <hr className="section-divider" />
 
            {/* Appliance form */}
-        <div className="app-heading">About the appliance</div>
+        <div className="app-heading">Appliance</div>
         <div className="form-grid">
 
           {/*Form for choosing a type */}
