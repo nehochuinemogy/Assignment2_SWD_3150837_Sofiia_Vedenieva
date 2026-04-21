@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+
 const APPLIANCE_TYPES = [
   'Washing Machine', 'Dishwasher', 'Refrigerator', 'Freezer',
   'Oven', 'Microwave', 'Tumble Dryer', 'Vacuum Cleaner',
@@ -10,9 +11,19 @@ const APPLIANCE_TYPES = [
 
 export default function AddPage() {
   const [form, setForm] = useState({
-    firstName: '', lastName: '', address: '', mobile: '', email: '', eircode: '',
-    applianceType: '', brand: '', modelNumber: '', serialNumber: '',
-    purchaseDate: '', warrantyExpirationDate: '', cost: '',
+     firstName: '',
+     lastName: '', 
+     address: '', 
+     mobile: '', 
+     email: '', 
+     eircode: '',
+     applianceType: '', 
+     brand: '', 
+     modelNumber: '', 
+     serialNumber: '',
+     purchaseDate: '', 
+     warrantyExpirationDate: '', 
+     cost: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -27,7 +38,7 @@ export default function AddPage() {
   const validate = () => {
     //creating object to store errors 
   const e = {};
-}
+
  if (!nameRegex.test(form.firstName)) 
     e.firstName = 'Please, enter letters only, from 2-50 characters';
     if (!nameRegex.test(form.lastName)) 
@@ -59,6 +70,7 @@ export default function AddPage() {
 
     setErrors(e);
     return Object.keys(e).length === 0;
+    };
 
     //implementing nadling for form sunmission
      const handleSubmit = async (e) => {
@@ -94,5 +106,8 @@ export default function AddPage() {
       //implementing catch for errors
       setStatus({ type: 'error', message: 'error, lease try again.' });
     }
-  };
 };
+    
+}
+  
+
