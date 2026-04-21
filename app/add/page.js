@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-
+import Link from 'next/link';
 
 const APPLIANCE_TYPES = [
   'Washing Machine', 'Dishwasher', 'Refrigerator', 'Freezer',
@@ -36,6 +36,10 @@ export default function AddPage() {
     setErrors(prev => ({ ...prev, [name]: '' }));
   };
   const validate = () => {
+       if (!validate()) return; 
+
+     setLoading(true);
+     setStatus(null);
     //creating object to store errors 
   const e = {};
 
@@ -107,7 +111,193 @@ export default function AddPage() {
       setStatus({ type: 'error', message: 'error, lease try again.' });
     }
 };
-    
+    return (
+    <div className="card">
+      <h1 className="card-add-name">Add appliance</h1>
+      <p className="card-add-desc">Please, enter information below</p>
+
+      {status && (
+        <div className={`alert alert-${status.type}`}>
+          {status.message}
+          {status.type === 'success' && (
+            <> &nbsp;<Link href="/" className="back-link">Return to home</Link></>
+          )}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} noValidate>
+
+        {/* user info*/}
+        <div className="app-heading">User</div>
+        <div className="form-grid">
+          <div className = 'form-group'>
+                {/*Name form*/}
+          <label htmlFor="firstName">First name</label>
+            <input
+              id="firstName" name="firstName" type="text"
+              className={`form-control ${errors.firstName ? 'error' : ''}`}
+              value={form.firstName} onChange={handleChange}
+              placeholder="Sofiia" maxLength={50} required
+            />
+            {errors.firstName && <span className="field-error">{errors.firstName}</span>}
+          </div>
+           <div className="form-group">
+            <label htmlFor="lastName">Last name</label>
+            <input
+              id="lastName" name="lastName" type="text"
+              className={`form-control ${errors.lastName ? 'error' : ''}`} 
+              value={form.lastName} onChange={handleChange}
+              placeholder="Vedenieva" maxLength={50} required
+            />
+            {errors.lastName && <span className="field-error">{errors.lastName}</span>}
+          </div>
+          {/* Form for address*/}
+          <div className="form-address">
+            <label htmlFor="address">Home address</label>
+            <input
+              id="address" name="address" type="text"
+              className={`form-control ${errors.address ? 'error' : ''}`}
+              value={form.address} onChange={handleChange}
+              placeholder="South Circular Road, Dublin 8" maxLength={150} required
+            />
+            {errors.address && <span className="field-error">{errors.address}</span>}
+          </div>
+           {/*Mobile number*/}
+            <div className="form-group">
+            <label htmlFor="mobile">Mobile</label>
+            <input
+              id="mobile" name="mobile" type="tel"
+              className={`form-control ${errors.mobile ? 'error' : ''}`}
+              value={form.mobile} onChange={handleChange}
+              placeholder="083 123 4567" maxLength={15} required
+            />
+            {errors.mobile && <span className="field-error">{errors.mobile}</span>}
+          </div>
+          {/*FOrm for Eircode */}
+           <div className="form-group">
+            <label htmlFor="eircode">Eircode</label>
+            <input
+              id="eircode" name="eircode" type="text"
+              className={`form-control ${errors.eircode ? 'error' : ''}`}
+              value={form.eircode} onChange={handleChange}
+              placeholder="D00 AB00" maxLength={8} required
+            />
+            {errors.eircode && <span className="field-error">{errors.eircode}</span>}
+          </div>
+          {/*Form for email */}
+          <div className="form-group full-width">
+            <label htmlFor="email">Email address</label>
+            <input
+              id="email" name="email" type="email"
+              className={`form-control ${errors.email ? 'error' : ''}`}
+              value={form.email} onChange={handleChange}
+              placeholder="sofiiavedenieva@email.com" maxLength={100} required
+            />
+            {errors.email && <span className="field-error">{errors.email}</span>}
+          </div>
+     </div>
+           <hr className="section-divider" />
+
+           {/* Appliance form */}
+        <div className="app-heading">About the appliance</div>
+        <div className="form-grid">
+
+          {/*Form for choosing a type */}
+          <div className="form-group">
+            <label htmlFor="applianceType">Type</label>
+            <select
+              id="applianceType" name="applianceType"
+              className={`form-control ${errors.applianceType ? 'error' : ''}`}
+              value={form.applianceType} onChange={handleChange} required
+            >
+              <option value="">Please, choose a type</option>
+              {APPLIANCE_TYPES.map(t => (
+                <option key={t} value={t}>{t}</option>
+              ))}
+            </select>
+            {errors.applianceType && <span className="field-error">{errors.applianceType}</span>}
+          </div>
+              {/*Form for brand */}
+          <div className="form-group">
+            <label htmlFor="brand">Brand</label>
+            <input
+              id="brand" name="brand" type="text"
+              className={`form-control ${errors.brand ? 'error' : ''}`}
+              value={form.brand} onChange={handleChange}
+              placeholder="e.g. Bosch" maxLength={50} required
+            />
+            {errors.brand && <span className="field-error">{errors.brand}</span>}
+          </div>
+
+              {/*Form for model number */}
+          <div className="form-group">
+            <label htmlFor="modelNumber">Model number</label>
+            <input
+              id="modelNumber" name="modelNumber" type="text"
+              className={`form-control ${errors.modelNumber ? 'error' : ''}`}
+              value={form.modelNumber} onChange={handleChange}
+              placeholder="e.g. WAE28468GB" maxLength={50} required
+            />
+            {errors.modelNumber && <span className="field-error">{errors.modelNumber}</span>}
+          </div>
+
+              {/*Form for serial number */}
+          <div className="form-group">
+            <label htmlFor="serialNumber">Serial number</label>
+            <input
+              id="serialNumber" name="serialNumber" type="text"
+              className={`form-control ${errors.serialNumber ? 'error' : ''}`}
+              value={form.serialNumber} onChange={handleChange}
+              placeholder="e.g. SN-001-BOSCH" maxLength={50} required
+            />
+            {errors.serialNumber && <span className="field-error">{errors.serialNumber}</span>}
+          </div>
+
+              {/*Form for choosing purchase date */}
+          <div className="form-group">
+            <label htmlFor="purchaseDate">Purchased on:</label>
+            <input
+              id="purchaseDate" name="purchaseDate" type="date"
+              className={`form-control ${errors.purchaseDate ? 'error' : ''}`}
+              value={form.purchaseDate} onChange={handleChange} required
+            />
+            {errors.purchaseDate && <span className="field-error">{errors.purchaseDate}</span>}
+          </div>
+
+              {/*Form for warranty date */}
+          <div className="form-group">
+            <label htmlFor="warrantyExpirationDate">Warranty expires:</label>
+            <input
+              id="warrantyExpirationDate" name="warrantyExpirationDate" type="date"
+              className={`form-control ${errors.warrantyExpirationDate ? 'error' : ''}`}
+              value={form.warrantyExpirationDate} onChange={handleChange} required
+            />
+            {errors.warrantyExpirationDate && <span className="field-error">{errors.warrantyExpirationDate}</span>}
+          </div>
+
+              {/*Form for cost */}
+          <div className="form-group">
+            <label htmlFor="cost">Cost (€)</label>
+            <input
+              id="cost" name="cost" type="number" step="0.01" min="0"
+              className={`form-control ${errors.cost ? 'error' : ''}`}
+              value={form.cost} onChange={handleChange}
+              placeholder="e.g. 599.99" required
+            />
+            {errors.cost && <span className="field-error">{errors.cost}</span>}
+          </div>
+
+        </div>
+
+     <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
+          {loading ? <><span className="spinner"></span> Adding…</> : 'Add appliance'}
+        </button>
+      </form>
+
+      <Link href="/" className="home-link"> Back to home</Link>
+
+    </div>
+  );
 }
   
 
