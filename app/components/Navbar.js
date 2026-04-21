@@ -13,9 +13,9 @@ export default function Navbar() {
 
     return (
     <nav className="navbar">
-      <Link href="/" className="navbar-brand">
+      <h1 className ="navbar-brand">
         Appliance Inventory
-      </Link>
+      </h1>
       <ul className="navbar-links">
         {links.map((link) => (
           <li key={link.href}>

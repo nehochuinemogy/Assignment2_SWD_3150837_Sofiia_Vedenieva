@@ -25,9 +25,6 @@ export default function RootLayout({ children }) {
         <main className= "main">
           {children}
         </main>
-          <footer className="footer">
-          <p>Household Appliance Inventory &copy; {new Date().getFullYear()}</p>
-        </footer>
       </body>
     </html>
   );

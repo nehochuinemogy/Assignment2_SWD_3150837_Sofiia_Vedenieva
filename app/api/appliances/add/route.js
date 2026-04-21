@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import pool from '../../../../lib/db';
-import { validateUser, validateAppliance, sanitise } from '../../../../lib/validation';
+import pool from '../../../lib/db';
+import { validateUser, validateAppliance, sanitise } from '../../../lib/validation';
 
 export async function POST(request) {
   try {
@@ -105,7 +105,7 @@ const userCheck = validateUser(clean);
       conn.release();
       throw dbErr;
     }
-      //
+      //catching errors and passing error
     } catch (error) {
     console.error('error', error);
     return NextResponse.json(

@@ -3,6 +3,11 @@
 import { useState } from 'react';
 //link for navigation
 import Link from 'next/link';
+import {
+  nameRegex, addressRegex, mobileRegex, emailRegex, eircodeRegex,
+  applianceTypeRegex, brandRegex, modelNumberRegex, serialNumberRegex, costRegex
+} from '../lib/validation';
+
 //appliance array for options
 const APPLIANCE_TYPES = [
   'Washing Machine',
@@ -48,9 +53,6 @@ export default function AddPage() {
     setErrors(prev => ({ ...prev, [name]: '' }));
   };
   const validate = () => {
-       if (!validate()) return; 
-     setLoading(true);
-     setStatus(null);
 
     //creating object to store errors 
    const e = {};
@@ -97,6 +99,8 @@ export default function AddPage() {
      const handleSubmit = async (e) => {
       e.preventDefault();
 
+      if (!validate()) return;
+      
      setLoading(true);
      setStatus(null);
 
@@ -104,7 +108,7 @@ export default function AddPage() {
       // sending POST request to our API
       const res = await fetch('/api/appliances/add', {
         method: 'POST',
-        headers: { 'content': 'application/json' },
+        headers: { 'Content-type': 'application/json' },
         body: JSON.stringify(form),
       });
 
@@ -126,6 +130,8 @@ export default function AddPage() {
        } catch {
       //implementing catch for errors
       setStatus({ type: 'error', message: 'error, lease try again.' });
+     } finally {
+      setLoading(false);
     }
 };
     return (
