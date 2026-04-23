@@ -1,5 +1,4 @@
-// app/update/page.js
-// 2-step update flow: 1) Lookup by serial, 2) Edit and save
+
 'use client';
 
 import { useState } from 'react';
@@ -153,7 +152,7 @@ export default function UpdatePage() {
       <h1> Update appliance</h1>
       <p>Enter serial number of the appliance </p>
 
-      {/* Form */}
+      {/* form */}
       {step === 1 && (
         <form onSubmit={handleLookup} className="search-form">
           <div className="form-group" style={{ flex: 1 }}>
@@ -175,7 +174,7 @@ export default function UpdatePage() {
         </form>
       )}
 
-      {/*Editing form */}
+      {/*editing form */}
       {step === 2 && form && (
         <>
           {status && (
@@ -232,12 +231,12 @@ export default function UpdatePage() {
           </form>
 
           <button className="btn btn-secondary" onClick={() => { setStep(1); setForm(null); setStatus(null); }} style={{ marginTop: '1rem' }}>
-            Search Again
+            Search again
           </button>
         </>
       )}
 
-      <Link href="/" className="home-link">Back to Home</Link>
+      <Link href="/" className="home-link">Back to home</Link>
     </div>
   );
 }

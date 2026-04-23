@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -57,12 +58,13 @@ export default function SearchPage() {
       <td className="table-value">{value}</td>
     </tr>
   );
+  
 
 
   //JSX
   return (
     <div className="card">
-      <h1>🔍 Search Appliance</h1>
+      <h1>Search Appliance</h1>
       <p>Enter serial number to look up appliance details</p>
 
       {/* searching form */}

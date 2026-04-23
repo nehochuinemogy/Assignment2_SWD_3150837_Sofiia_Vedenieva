@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 //implementing regex validation for user data inputs
 export const nameRegex = /^[A-Za-z\s'-]{2,50}$/;
 export const addressRegex = /^[A-Za-z0-9\s,.-]{5,150}$/;
