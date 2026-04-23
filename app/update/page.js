@@ -78,6 +78,34 @@ export default function UpdatePage() {
       setLoadingSearch(false);
     }
   };
+// handle changes in editing
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
+    setErrors(prev => ({ ...prev, [name]: '' }));
+  };
+
+  // validation for form
+  const validate = () => {
+    const e = {};
+    if (!nameRegex.test(form.firstName)) e.firstName = 'Invalid first name';
+    if (!nameRegex.test(form.lastName)) e.lastName = 'Invalid last name';
+    if (!addressRegex.test(form.address)) e.address = 'Invalid address';
+    if (!mobileRegex.test(form.mobile)) e.mobile = 'Invalid Irish mobile number';
+    if (!emailRegex.test(form.email)) e.email = 'Invalid email address';
+    if (!eircodeRegex.test(form.eircode)) e.eircode = 'Invalid Eircode (e.g. D02 AB12)';
+    if (!applianceTypeRegex.test(form.applianceType)) e.applianceType = 'Invalid appliance type';
+    if (!brandRegex.test(form.brand)) e.brand = 'Invalid brand';
+    if (!modelNumberRegex.test(form.modelNumber)) e.modelNumber = 'Invalid model number';
+    if (!form.purchaseDate) e.purchaseDate = 'Purchase date required';
+    if (!form.warrantyExpirationDate) e.warrantyExpirationDate = 'Warranty date required';
+    if (form.purchaseDate && form.warrantyExpirationDate &&
+        new Date(form.warrantyExpirationDate) <= new Date(form.purchaseDate))
+      e.warrantyExpirationDate = 'Warranty must be after purchase date';
+    if (!costRegex.test(String(form.cost))) e.cost = 'Valid cost required (e.g. 599.99)';
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
 
   
 }
