@@ -106,6 +106,29 @@ export default function UpdatePage() {
     setErrors(e);
     return Object.keys(e).length === 0;
   };
+// updating API
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    setLoading(true);
+    setStatus(null);
+    try {
+      const res = await fetch('/api/appliances/update', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setStatus({ type: 'success', message: data.message });
+      } else {
+        setStatus({ type: 'error', message: data.message });
+      }
+    } catch {
+      setStatus({ type: 'error', message: 'Network error' });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  
 }
