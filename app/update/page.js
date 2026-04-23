@@ -130,5 +130,114 @@ export default function UpdatePage() {
       setLoading(false);
     }
   };
+  
+  // implrmrting reusable input field component
+  const Field = ({ id, label, type = 'text', placeholder = '', maxLength = 100 }) => (
+    <div className="form-group">
+      <label htmlFor={id}>{label}</label>
+      <input
+        id={id} name={id} type={type}
+        className={`form-control ${errors[id] ? 'error' : ''}`}
+        value={form?.[id] ?? ''}
+        onChange={handleChange}
+        placeholder={placeholder}
+        maxLength={maxLength}
+        required
+      />
+      {errors[id] && <span className="field-error">{errors[id]}</span>}
+    </div>
+  );
 
+  return (
+    <div className="card">
+      <h1> Update appliance</h1>
+      <p>Enter serial number of the appliance </p>
+
+      {/* Form */}
+      {step === 1 && (
+        <form onSubmit={handleLookup} className="search-form">
+          <div className="form-group" style={{ flex: 1 }}>
+            <label htmlFor="searchSerial">Serial number</label>
+            <input
+              id="searchSerial"
+              type="text"
+              className={`form-control ${searchError ? 'error' : ''}`}
+              value={searchSerial}
+              onChange={(e) => { setSearchSerial(e.target.value); setSearchError(''); }}
+              placeholder="SN-001-BOSCH"
+              required
+            />
+            {searchError && <span className="field-error">{searchError}</span>}
+          </div>
+          <button type="submit" className="btn btn-primary" disabled={loadingSearch}>
+            {loadingSearch ? 'Looking up...' : 'Find Appliance'}
+          </button>
+        </form>
+      )}
+
+      {/*Editing form */}
+      {step === 2 && form && (
+        <>
+          {status && (
+            <div className={`alert alert-${status.type}`}>
+              {status.message}
+            </div>
+          )}
+    
+          <div className="alert alert-info">
+            Editing appliance: <strong>{form.serialNumber}</strong> —  number cannot be changed.
+          </div>
+
+          <form onSubmit={handleUpdate}>
+            <div className="app-heading">User </div>
+            <div className="form-grid">
+              <Field id="firstName" label="First Name" placeholder="John" />
+              <Field id="lastName" label="Last Name" placeholder="Murphy" />
+              <div className="full-width">
+                <Field id="address" label="Address" placeholder="12 Oak Street, Dublin 2" maxLength={150} />
+              </div>
+              <Field id="mobile" label="Mobile" type="tel" placeholder="0871234567" maxLength={15} />
+              <Field id="email" label="Email" type="email" placeholder="john@email.com" maxLength={100} />
+              <Field id="eircode" label="Eircode" placeholder="D02 AB12" maxLength={8} />
+            </div>
+
+            <hr className="section-divider" />
+
+            <div className="app-heading">Appliance </div>
+            <div className="form-grid">
+              {/* dropdown */}
+              <div className="form-group">
+                <label htmlFor="applianceType">Appliance type</label>
+                <select
+                  id="applianceType" name="applianceType"
+                  className={`form-control ${errors.applianceType ? 'error' : ''}`}
+                  value={form.applianceType}
+                  onChange={handleChange}
+                  required
+                >
+                  {APPLIANCE_TYPES.map(t => <option key={t}>{t}</option>)}
+                </select>
+                {errors.applianceType && <span className="field-error">{errors.applianceType}</span>}
+              </div>
+              <Field id="brand" label="Brand" placeholder="Bosch" />
+              <Field id="modelNumber" label="Model Number" placeholder="WAE28468GB" />
+              <Field id="purchaseDate" label="Purchase Date" type="date" />
+              <Field id="warrantyExpirationDate" label="Warranty Expiry" type="date" />
+              <Field id="cost" label="Cost (€)" type="number" placeholder="599.99" />
+            </div>
+
+            <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
+              {loading ? 'Updating...' : ' Update Appliance'}
+            </button>
+          </form>
+
+          <button className="btn btn-secondary" onClick={() => { setStep(1); setForm(null); setStatus(null); }} style={{ marginTop: '1rem' }}>
+            Search Again
+          </button>
+        </>
+      )}
+
+      <Link href="/" className="home-link">Back to Home</Link>
+    </div>
+  );
 }
