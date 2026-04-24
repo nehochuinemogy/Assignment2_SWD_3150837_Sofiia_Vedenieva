@@ -5,16 +5,16 @@ import Link from 'next/link';
 import { serialNumberRegex } from './../lib/validation';
 
 export default function DeletePage() {
-  const [step, setStep] = useState(1);         // 1=lookup, 2=confirm, 3=success
+  const [step, setStep] = useState(1);
   const [searchSerial, setSearchSerial] = useState('');
   const [searchError, setSearchError] = useState('');
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [appliance, setAppliance] = useState(null);
   const [status, setStatus] = useState(null);
   const [loadingDelete, setLoadingDelete] = useState(false);
-}
 
- const handleLookup = async (e) => {
+  // Step 1: Lookup handler
+  const handleLookup = async (e) => {
     e.preventDefault();
     if (!serialNumberRegex.test(searchSerial)) {
       setSearchError('Invalid serial number format');
@@ -36,7 +36,10 @@ export default function DeletePage() {
     } finally {
       setLoadingSearch(false);
     }
-      const handleDelete = async () => {
+  };
+
+  // Step 2: Delete handler
+  const handleDelete = async () => {
     setLoadingDelete(true);
     setStatus(null);
     try {
@@ -57,13 +60,16 @@ export default function DeletePage() {
       setLoadingDelete(false);
     }
   };
-   const Row = ({ label, value }) => (
+
+  // Helper component for table rows
+  const Row = ({ label, value }) => (
     <tr>
       <th className="table-label">{label}</th>
       <td className="table-value">{value}</td>
     </tr>
   );
-    return (
+
+  return (
     <div className="card">
       <h1>🗑️ Delete Appliance</h1>
       <p>Enter serial number to permanently remove an appliance</p>
@@ -89,7 +95,8 @@ export default function DeletePage() {
           </button>
         </form>
       )}
-            {/* STEP 2: Confirm deletion */}
+
+      {/* STEP 2: Confirm deletion */}
       {step === 2 && appliance && (
         <>
           <div className="alert alert-warning">
@@ -122,7 +129,8 @@ export default function DeletePage() {
           </div>
         </>
       )}
-            {/* STEP 3: Success */}
+
+      {/* STEP 3: Success */}
       {step === 3 && (
         <div className="alert alert-success">
           ✅ Appliance successfully deleted. <Link href="/" className="back-link">Return to Home</Link>
@@ -133,4 +141,3 @@ export default function DeletePage() {
     </div>
   );
 }
-  

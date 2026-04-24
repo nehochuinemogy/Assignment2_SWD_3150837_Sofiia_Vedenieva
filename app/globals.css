@@ -7,8 +7,69 @@
   padding: 0;
 }
 
-/* app/globals.css (or dedicated home-page.css) */
 
+/* ===== Delete Page Specific ===== */
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.alert-warning {
+  background: #fffbeb;
+  border-left: 5px solid #f59e0b;
+  color: #b45309;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f8fafc;
+  margin: 1rem 0;
+}
+
+.table-label {
+  text-align: left;
+  font-weight: 600;
+  background: #f1f5f9;
+  padding: 0.5rem 1rem;
+}
+
+.table-value {
+  padding: 0.5rem 1rem;
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: white;
+}
+
+.btn-secondary {
+  background: #e2e8f0;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+}
+
+.flex {
+  display: flex;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.back-link {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
 /* ----- Home Page Hero Section ----- */
 .home-hero {
   text-align: center;
