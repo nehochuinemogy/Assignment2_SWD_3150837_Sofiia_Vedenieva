@@ -36,4 +36,25 @@ export default function DeletePage() {
     } finally {
       setLoadingSearch(false);
     }
+      const handleDelete = async () => {
+    setLoadingDelete(true);
+    setStatus(null);
+    try {
+      const res = await fetch('/api/appliances/delete', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ serialNumber: appliance.SerialNumber }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setStep(3);
+      } else {
+        setStatus({ type: 'error', message: data.message });
+      }
+    } catch {
+      setStatus({ type: 'error', message: 'Network error' });
+    } finally {
+      setLoadingDelete(false);
+    }
+  };
   };
