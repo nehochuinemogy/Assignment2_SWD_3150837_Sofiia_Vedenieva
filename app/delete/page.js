@@ -57,4 +57,10 @@ export default function DeletePage() {
       setLoadingDelete(false);
     }
   };
+   const Row = ({ label, value }) => (
+    <tr>
+      <th className="table-label">{label}</th>
+      <td className="table-value">{value}</td>
+    </tr>
+  );
   };
