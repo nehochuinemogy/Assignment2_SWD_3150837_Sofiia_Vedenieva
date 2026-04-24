@@ -13,3 +13,27 @@ export default function DeletePage() {
   const [status, setStatus] = useState(null);
   const [loadingDelete, setLoadingDelete] = useState(false);
 }
+
+ const handleLookup = async (e) => {
+    e.preventDefault();
+    if (!serialNumberRegex.test(searchSerial)) {
+      setSearchError('Invalid serial number format');
+      return;
+    }
+    setSearchError('');
+    setLoadingSearch(true);
+    try {
+      const res = await fetch(`/api/appliances/search?serial=${encodeURIComponent(searchSerial)}`);
+      const data = await res.json();
+      if (res.ok && data.appliance) {
+        setAppliance(data.appliance);
+        setStep(2);
+      } else {
+        setSearchError('No matching appliance found');
+      }
+    } catch {
+      setSearchError('Network error. Please try again.');
+    } finally {
+      setLoadingSearch(false);
+    }
+  };
